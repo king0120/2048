@@ -1,8 +1,9 @@
 class Tile {
-  constructor (row, col) {
+  constructor (row, col, num) {
     this.value = 0
     this.row = row
     this.col = col
+    this.num = num
   }
 
   getValue() {

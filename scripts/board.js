@@ -1,11 +1,15 @@
 class Board {
   constructor(){
-    this.board = [
-      [new Tile(0, 0), new Tile(0, 1), new Tile(0, 2), new Tile(0, 3)],
-      [new Tile(1, 0), new Tile(1, 1), new Tile(1, 2), new Tile(1, 3)],
-      [new Tile(2, 0), new Tile(2, 1), new Tile(2, 2), new Tile(2, 3)],
-      [new Tile(3, 0), new Tile(3, 1), new Tile(3, 2), new Tile(3, 3)],
-    ]
+    const tiles = []
+    let count = 0
+    for (let i = 0; i < 4; i++){
+      for (let j = 0; j < 4; j++){
+        count++
+        const tile = new Tile(i % 4, j % 4, count)
+        tiles.push(tile)
+      }  
+    }
+    this.board = tiles
   }
 
   onEachTile(callback){
@@ -19,9 +23,9 @@ class Board {
   generateTile(){
     const row = Math.floor(Math.random() * 4)
     const col = Math.floor(Math.random() * 4)
-    if (this.board[row][col].getValue() === 0){
+    if (this.board[row * col].getValue() === 0){
       console.log(`Insert at ${col}, ${row}`)
-      this.board[row][col].setValue(2)
+      this.board[row * col].setValue(2)
     } else {
       return this.generateTile()
     }

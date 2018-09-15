@@ -6,18 +6,86 @@ body {
   height: 500px;
   width: 500px;
   background: blue;
-  display: grid;
-  grid-template-columns: repeat(4, 125px);
-  grid-template-rows: repeat(4, 125px);
+  // display: grid;
+  // grid-template-columns: repeat(4, 125px);
+  // grid-template-rows: repeat(4, 125px);
 }
 
 .cell {
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  box-sizing: border-box;
+  height: 125px;
+  width: 125px;
   background-color: green;
   border: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 4rem;
+  transition: all .3s ease-in;
 }
+
+.cell-1{
+  transform: translate(0, 0);
+}
+
+.cell-2{
+  transform: translate(125px, 0);
+}
+
+.cell-3{
+  transform: translate(250px, 0);
+}
+
+.cell-4{
+  transform: translate(375px, 0);
+}
+
+.cell-5{
+  transform: translate(0, 125px);
+}
+
+.cell-6{
+  transform: translate(125px, 125px);
+}
+
+.cell-7{
+  transform: translate(250px, 125px);
+}
+
+.cell-8{
+  transform: translate(375px, 125px);
+}
+
+.cell-9{
+  transform: translate(0, 250px);
+}
+
+.cell-10{
+  transform: translate(125px, 250px);
+}
+
+.cell-11{
+  transform: translate(250px, 250px);
+}
+
+.cell-12{
+  transform: translate(375px, 250px);
+}
+
+.cell-13{
+  transform: translate(0, 375px);
+}
+
+.cell-14{
+  transform: translate(125px, 375px);
+}
+
+.cell-15{
+  transform: translate(250px, 375px);
+}
+
+.cell-16{
+  transform: translate(375px, 375px);
+}
+

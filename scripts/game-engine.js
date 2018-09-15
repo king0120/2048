@@ -6,12 +6,14 @@ class GameEngine {
   draw() {
     const boardDiv = document.querySelector('.board');
     boardDiv.innerHTML = ''
-    this.gameboard.board.map(row => {
-      row.map(cell => {
-        boardDiv.innerHTML += (`
-          <div class='cell'>${cell.value}</div>
-        `)
-      })
+    let tileNumber = 0
+    this.gameboard.board.map((cell, index)  => {
+        tileNumber += 1
+        if (cell.value > 0){
+          boardDiv.innerHTML += (`
+            <div class='cell cell-${cell.num}'>${cell.value}</div>
+          `)
+        }
     })
   }
 
