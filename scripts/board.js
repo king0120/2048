@@ -2,30 +2,25 @@ class Board {
   constructor(){
     const tiles = []
     let count = 0
-    for (let i = 0; i < 4; i++){
-      for (let j = 0; j < 4; j++){
-        count++
-        const tile = new Tile(i % 4, j % 4, count)
-        tiles.push(tile)
-      }  
-    }
+    tiles.length = 16
     this.board = tiles
   }
 
   onEachTile(callback){
-    for (let row = 0; row < this.board.length; row++){
-      for(let col = 0; col < this.board[row].length; col++){
-          callback(this.board[row][col], row, col)
-      }
+    for (let cell = 0; cell < this.board.length; cell++){
+        callback(this.board[cell])
     }
   }
 
   generateTile(){
-    const row = Math.floor(Math.random() * 4)
-    const col = Math.floor(Math.random() * 4)
-    if (this.board[row * col].getValue() === 0){
-      console.log(`Insert at ${col}, ${row}`)
-      this.board[row * col].setValue(2)
+    const availableTiles = [1,2,3,4,5,8,9,12,13,14,15,16]
+    const randomTileIndex = Math.floor(Math.random() * availableTiles.length)
+
+    const randomTile = availableTiles[randomTileIndex]
+
+    if (!this.board[randomTile - 1]){
+      console.log(`Insert at ${randomTile}`)
+      this.board.splice(randomTile - 1, 1, new Tile(1, 1, randomTile, 2))
     } else {
       return this.generateTile()
     }
@@ -43,7 +38,7 @@ class Board {
   isMovePossible(direction){
     let canMoveCount = 0
     this.onEachTile(tile => {
-      if (tile.value > 0 && tile.canMove(direction)) {
+      if (tile && tile.value > 0 && tile.canMove(direction)) {
         canMoveCount += 1
       }
     })
@@ -51,6 +46,7 @@ class Board {
   }
 
   slide(direction){
+
     if (!this.isMovePossible(direction)) {
       console.log("Cannot slide in this direction.")
       return
@@ -59,46 +55,32 @@ class Board {
     let rerun = false
     
     const move= () => this.onEachTile((tile) => {
-      if (tile.getValue() > 0){
+      if (tile && tile.getValue() > 0){
         if (tile.canMove(direction)) {
+          console.log(`Row: ${tile.row}, Col: ${tile.col}, Num: ${tile.num}`)
           const {row, col} = tile
           if (direction === 'up') {
-            if (tile.compareNeighborTile(this.board[row - 1][col])){
-              tile.row -= 1
-              this.board[row - 1].splice(col, 1, tile)
-              this.board[row].splice(col, 1, new Tile(row, col))
-              rerun = true
-            }
+            
           } else if (direction === 'down') {
-            if (tile.compareNeighborTile(this.board[row + 1][col])){
-              tile.row += 1
-              this.board[row + 1].splice(col, 1, tile)
-              this.board[row].splice(col, 1, new Tile(row, col))
-              rerun = true
-            }
+            
           } else if (direction === 'left') {
-            if (tile.compareNeighborTile(this.board[row][col - 1])){
-              tile.col -= 1
-              this.board[row].splice(col - 1, 1, tile)
-              this.board[row].splice(col, 1, new Tile(row, col))
-              rerun = true
-            } 
+            
           }else if (direction === 'right') {
-            if (tile.compareNeighborTile(this.board[row][col + 1])){
-              tile.col += 1
-              this.board[row].splice(col + 1, 1, tile)
-              this.board[row].splice(col, 1, new Tile(row, col))
-              rerun = true
-            }
+            const rightAmountToMove = (tile.row * 4) - tile.num
+            const newNum = tile.num + rightAmountToMove
+            tile.draw(newNum)
+            tile.num = newNum
+            console.log(rightAmountToMove)
           }        
         }
       }
     })
 
-    do {
-      rerun = false
-      move()
-    } while (rerun)
+    move()
+    // do {
+    //   rerun = false
+    //   move()
+    // } while (rerun)
 
     this.generateTile()
   }

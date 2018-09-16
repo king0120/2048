@@ -26,8 +26,12 @@ body {
       -ms-flex-align: center;
           align-items: center;
   font-size: 4rem;
-  -webkit-transition: all .3s ease-in;
-  transition: all .3s ease-in;
+  -webkit-transition: all 2s ease-in;
+  transition: all 2s ease-in;
+}
+
+.hidden {
+  display: none;
 }
 
 .cell-1 {

@@ -6,9 +6,6 @@ body {
   height: 500px;
   width: 500px;
   background: blue;
-  // display: grid;
-  // grid-template-columns: repeat(4, 125px);
-  // grid-template-rows: repeat(4, 125px);
 }
 
 .cell {
@@ -22,7 +19,11 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
-  transition: all .3s ease-in;
+  transition: all 2s ease-in;
+}
+
+.hidden {
+  display: none;
 }
 
 .cell-1{

@@ -1,46 +1,48 @@
 class GameEngine {
-  constructor(gameboard){
+  constructor(gameboard) {
     this.gameboard = gameboard
   }
 
-  draw() {
+  createBoard() {
+    console.log(this.gameboard)
     const boardDiv = document.querySelector('.board');
-    boardDiv.innerHTML = ''
-    let tileNumber = 0
-    this.gameboard.board.map((cell, index)  => {
-        tileNumber += 1
-        if (cell.value > 0){
+    this.gameboard.board.map((cell, index) => {
+        let cellNode = document.querySelector(`.cell-${cell.num}`)
+        if (!cellNode) {
           boardDiv.innerHTML += (`
-            <div class='cell cell-${cell.num}'>${cell.value}</div>
-          `)
+          <div class='cell cell-${cell.num} ${cell.value
+            ? null
+            : 'hidden'}'>${cell.value}</div>
+        `)
         }
-    })
+      })
   }
 
-  detectMove({key}){
+  detectMove(event) {
     const board = this.gameboard
-    switch(key){
-      case 'w':
+    const {key} = event
+    let prevBoard = []
+    // TODO: Find out why Arrow updownleftright isn't working
+    switch (key) {
+      case('w' || 'ArrowUp'):
         board.slide('up')
-        break;
-      case 'a':
+      case('a' || 'ArrowLeft'):
         board.slide('left')
-        break;
-      case 's':
+      case('s' || 'ArrowDown'):
         board.slide('down')
-        break;
-      case 'd':
-        board.slide('right')    
-        break;
+      case('d' || 'ArrowRight'):
+        board.slide('right')
     }
 
-    this.draw()
+    console.log(prevBoard)
   }
 
-  startGame(){
+  startGame() {
     this.gameboard.generateTile()
-    this.draw()
+    this.createBoard()
 
-    document.body.addEventListener('keypress', (e) => this.detectMove(e))
+    document
+      .body
+      .addEventListener('keypress', (e) => this.detectMove(e))
   }
 }

@@ -1,9 +1,10 @@
 class Tile {
-  constructor (row, col, num) {
-    this.value = 0
+  constructor (row, col, num, value = 0) {
     this.row = row
     this.col = col
     this.num = num
+    this.value = value
+    console.log(this)
   }
 
   getValue() {
@@ -14,14 +15,21 @@ class Tile {
     switch (direction) {
       case 'up':
         console.log('cell row ' + this.row)
-        return this.row > 0
+        return this.row > 1
       case 'down':
-        return this.row < 3
+        return this.row < 4
       case 'left':
-        return this.col > 0
+        return this.col > 1
       case 'right':
-        return this.col < 3
+        return this.col < 4
     }
+  }
+
+  draw(newCell){
+    let cellNode = document.querySelector(`.cell-${this.num}`)
+    cellNode.classList.remove(`cell-${this.num}`)
+    cellNode.classList.add(`cell-${newCell}`)
+
   }
 
   compareNeighborTile(comparisonTile){
