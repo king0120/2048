@@ -1,9 +1,6 @@
 class Board {
   constructor(){
-    const tiles = []
-    let count = 0
-    tiles.length = 16
-    this.board = tiles
+    this.board = new Tiles()
   }
 
   onEachTile(callback){
@@ -18,21 +15,12 @@ class Board {
 
     const randomTile = availableTiles[randomTileIndex]
 
-    if (!this.board[randomTile - 1]){
+    if (!this.board.findTile(randomTile)){
       console.log(`Insert at ${randomTile}`)
-      this.board.splice(randomTile - 1, 1, new Tile(1, 1, randomTile, 2))
+      this.board.insertTile(new Tile(randomTile, 2))
     } else {
       return this.generateTile()
     }
-     
-    // this.printBoard()
-  }
-
-  printBoard(){
-    console.log(this.board[0])
-    console.log(this.board[1])
-    console.log(this.board[2])
-    console.log(this.board[3])
   }
 
   isMovePossible(direction){
@@ -46,7 +34,7 @@ class Board {
   }
 
   slide(direction){
-
+    console.log(direction)
     if (!this.isMovePossible(direction)) {
       console.log("Cannot slide in this direction.")
       return
@@ -57,10 +45,12 @@ class Board {
     const move= () => this.onEachTile((tile) => {
       if (tile && tile.getValue() > 0){
         if (tile.canMove(direction)) {
-          console.log(`Row: ${tile.row}, Col: ${tile.col}, Num: ${tile.num}`)
+          
+          // console.log(`Row: ${tile.row}, Col: ${tile.col}, Num: ${tile.num}`)
           const {row, col} = tile
           if (direction === 'up') {
-            
+            console.log(tile.row)
+            console.log(tile.col)
           } else if (direction === 'down') {
             
           } else if (direction === 'left') {

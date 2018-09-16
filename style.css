@@ -26,8 +26,8 @@ body {
       -ms-flex-align: center;
           align-items: center;
   font-size: 4rem;
-  -webkit-transition: all 2s ease-in;
-  transition: all 2s ease-in;
+  -webkit-transition: all .5s ease-in;
+  transition: all .5s ease-in;
 }
 
 .hidden {
