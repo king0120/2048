@@ -4,22 +4,28 @@ class GameEngine {
   }
 
   detectMove(event) {
+    
     const board = this.gameboard
     const { key } = event
+    
     let prevBoard = []
     // TODO: Find out why Arrow updownleftright isn't working
     switch (key) {
       case ('w'):
-        return board.slide('up')
+        board.slide('up')
+        break
       case ('a'):
-        return board.slide('left')
+        board.slide('left')
+        break
       case ('s'):
-        return board.slide('down')
+        board.slide('down')
+        break
       case ('d'):
-        return board.slide('right')
+        board.slide('right')
+        break
     }
 
-    console.log(prevBoard)
+    console.log(board.board.tiles.length + " tiles")
   }
 
   startGame() {

@@ -5,29 +5,13 @@ class Board {
 
   // Create a new tile in an empty space
   generateTile() {
-    const availableTiles = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      8,
-      9,
-      12,
-      13,
-      14,
-      15,
-      16
-    ]
+    const availableTiles = [1,2,3,4,5,8,9,12,13,14,15,16]
     const randomTileIndex = Math.floor(Math.random() * availableTiles.length)
 
     const randomTile = availableTiles[randomTileIndex]
     // Check if random Tile alreay exists
     if (!this.board.findTile(randomTile)) {
-      console.log(`Insert at ${randomTile}`)
-      this
-        .board
-        .insertTile(new Tile(randomTile, 2))
+      this.board.insertTile(new Tile(randomTile, 2))
     } else {
       return this.generateTile()
     }
@@ -35,14 +19,23 @@ class Board {
   }
 
   slide(direction) {
-    console.log(direction)
     switch (direction) {
       case('right'):
         {
           this.board.onEachTile((cell) => {
               if (cell.canMove(direction)) {
-                console.log(cell.num)
-                cell.right()
+                let desired = cell.row * 4
+                let current = cell.num
+                while (current !== desired){
+                  current += 1
+                  let neighbor = this.board.findTile(current)
+                  if (neighbor){
+                    if (!cell.compareNeighborTile(neighbor, this.board)){
+                      cell.right()
+                    }
+                  }
+                }
+                
               }
             })
           setTimeout(() => this.generateTile(), 300)

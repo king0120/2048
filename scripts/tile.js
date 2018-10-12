@@ -17,14 +17,20 @@ class Tiles {
   }
 
   findTile(num) {
-    console.log(this.tiles)
     return this.tiles.find(tile => tile && tile.num === num)
   }
 
   remove(tileToRemove) {
-    this.tiles = this
-      .tiles
-      .filter(tile => tile.num === tileToRemove)
+
+    let newTiles = this.tiles.filter(tile => {
+      console.log(this.tiles)
+      console.log(tileToRemove)
+      return tile.num !== tileToRemove.num
+    })
+    console.log(newTiles.length)
+    console.log(this.tiles.length)
+
+    this.tiles = newTiles
     tileToRemove.eraseFromDom()
   }
 }
@@ -79,8 +85,6 @@ class Tile {
 
   draw(newCell) {
     let cellNode = document.querySelector(`.cell-${this.num}`)
-    console.log(this.num)
-    console.log(cellNode)
     if (!cellNode) {
       const boardDiv = document.querySelector('.board')
       boardDiv.innerHTML += (`
@@ -94,17 +98,15 @@ class Tile {
   }
 
   eraseFromDom() {
-    document
-      .querySelector(`.cell-${this.num}`)
-      .remove()
+    document.querySelector(`.cell-${this.num}`).remove()
   }
 
-  compareNeighborTile(comparisonTile) {
-    const { row, col } = this
-    if (comparisonTile.value > 0 && comparisonTile.value !== this.value) {
+  compareNeighborTile(comparisonTile, board) {
+    if (comparisonTile.value !== this.value) {
       return false
     } else if (comparisonTile.value === this.value) {
-      this.value *= 2
+      this.value = comparisonTile.value * 2
+      board.remove(comparisonTile)
       return true
     }
   }
@@ -115,12 +117,13 @@ class Tile {
 
   left() {
     let possible = [null, 1, 5, 9, 13]
-    console.log(possible[this.row])
     this.draw(possible[this.row])
   }
   right() {
-    const numberOfTilesToMove = (this.row * 4)
-    this.draw(numberOfTilesToMove)
+    if (this.num % 4 !== 0){
+      this.num+=1
+    }
+    this.draw(this.num)
   }
   up() {
     const desiredLoc = this.col
